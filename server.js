@@ -8,14 +8,14 @@ import authRoute from './routes/authRoute.js'
 import categoryRoute from './routes/categoryRoute.js'
 import productRoute from './routes/productRoute.js'
 import path from 'path'
-// import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'url';
 // configure env
 dotenv.config();
 
 // databse config
 connectDB();
-// const __filename=fileURLToPath(import.meta.url)
-// const __dirname=path.dirname(__filename);
+const __filename=fileURLToPath(import.meta.url)
+const __dirname=path.dirname(__filename);
 
 // rest object
 const app=express();
@@ -24,7 +24,7 @@ const app=express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
-// app.use(express.static(path.join(__dirname,'./client/build')))
+app.use(express.static(path.join(__dirname,'./client/build')))
 
 // routes
 app.use("/api/v1/auth",authRoute);
@@ -33,9 +33,9 @@ app.use("/api/v1/product",productRoute);
 
 const port=process.env.PORT;
 // rest api
-// app.use('*',function(req,res){
-//     res.sendFile(path.join(__dirname,"./client/build/index.html"))
-// })
+app.use('*',function(req,res){
+    res.sendFile(path.join(__dirname,"./client/build/index.html"))
+})
 app.listen(port,()=>{
     console.log(`server is running on ${port}`.bgCyan.yellow);   
 })
